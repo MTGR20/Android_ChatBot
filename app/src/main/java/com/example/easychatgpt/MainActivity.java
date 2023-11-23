@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             .build();
 
     private static final String API_KEY = BuildConfig.API_KEY;
+    private static final String questionOption = "10글자 내로 대답해줘.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,13 +92,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void callAPI(String question) {
+        ArrayList<String> message = new ArrayList<String>();
+        message.add(question);
+        message.add(questionOption);
+
         // okhttp
         messageList.add(new Message("... ", Message.SENT_BY_BOT));
 
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("model", "gpt-3.5-turbo-instruct");
-            jsonBody.put("prompt", question);
+            jsonBody.put("prompt", message);
             jsonBody.put("max_tokens", 4000);
             jsonBody.put("temperature", 0);
         } catch (JSONException e) {
